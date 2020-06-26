@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+       <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Immeubles</title>
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />  
+        <link th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}" rel="stylesheet" > 
+		<script src="https://use.fontawesome.com/ee84922179.js"></script>
+    </head>
+    <body>
+     	<div th:replace="common/layout :: mynav"></div>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                   <div th:replace="common/layout :: mysidebar"></div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Immeubles</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a th:href="@{/}">liste</a></li>
+                            <li class="breadcrumb-item active" th:if="${type!=null}">Modification</li>
+                            <li class="breadcrumb-item active" th:if="${type==null}">Ajout</li>
+                        </ol>
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                              <form class="row justify-content-around" th:action="${type != null}? @{/immeuble/{id}(id=${building.idBuilding})} :@{/immeuble-ajout}" th:object="${building}" method="post">
+								 <div class="col-md-5">
+								  <div class="form-group">
+								    <label for="address">Adresse de l'immeuble</label>
+								    <input type="text" class="form-control" id="address" placeholder="Lomé,Adidogomé" th:field="*{address}">
+								  </div>
+								  <div class="form-group">
+								    <label for="name">Nom de l'immeuble</label>
+								    <input type="text" class="form-control" id="name" placeholder="Palais Rose" th:field="*{name}">
+								  </div>
+								  <div class="form-group">
+								   <input type="submit" value="Enregistrer" class="btn btn-primary btn-sm mb-3 text-light"/>&nbsp;
+								   <input type="reset" value="Annuler" class="btn btn-secondary btn-sm mb-3 text-light"/>
+								  </div>
+								 </div>
+								</form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+              <div th:replace="common/layout :: myfoot"></div>
+            </div> 
+        </div>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script th:src="@{/js/scripts.js}"></script>
+    </body>
+</html>

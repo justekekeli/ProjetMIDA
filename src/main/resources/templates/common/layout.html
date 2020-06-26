@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="mynav">
+       <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
+            <a class="navbar-brand" href="index.html">AsacImmobilier</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" ><i class="fa fa-bars"></i></button
+            >
+            <!-- Nav bar-->
+            <ul class="navbar-nav ml-auto float-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Settings</a><a class="dropdown-item" href="#">Activity Log</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+</div>
+<div  th:fragment="mysidebar">
+           <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Options</div>
+                            <a class="nav-link" href="index.html"
+                                ><span class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></span>
+                                Tableau de bord</a
+                            >
+                            <div class="sb-sidenav-menu-heading">Fonctionnalités</div>
+                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
+                                ><span class="sb-nav-link-icon"><i class="fa fa-users"></i></span>
+                            	Clients
+                                <span class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></span
+                            ></a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" th:href="@{/client-ajout}">Ajout d'un client</a><a class="nav-link" th:href="@{/}">Rechercher client</a></nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayout" aria-expanded="false" aria-controls="collapseLayout"
+                                ><span class="sb-nav-link-icon"><i class="fa fa-user-circle"></i></span>
+                            	Utilisateurs
+                                <span class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></span
+                            ></a>
+                            <div class="collapse" id="collapseLayout" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" th:href="@{/utilisateur-ajout}" >Ajout</a><a class="nav-link" th:href="@{/liste-utilisateurs}">Rechercher utilisateur</a></nav>
+                            </div>
+                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseImmeuble" aria-expanded="false" aria-controls="collapseLayout"
+                                ><span class="sb-nav-link-icon"><i class="fa fa-building"></i></span>
+                            	Immeubles
+                                <span class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></span
+                            ></a>
+                            <div class="collapse" id="collapseImmeuble" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/immeuble-ajout}" >Ajout d'un immeuble</a>
+                                <a class="nav-link" th:href="@{/liste-immeubles}">Rechercher Immeuble</a>
+                                <a class="nav-link" th:href="@{/liste-appartements}">appartements</a></nav>
+                            </div>
+                        </div>
+                    </div>
+                  
+</div>
+<div th:fragment="myfoot">
+  <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; AsacImmobilierAsacImmobilier Website 2020</div>
+                        </div>
+                    </div>
+  </footer>
+</div>
+</body>
+</html>
