@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+       <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Visites</title>
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />  
+        <link th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}" rel="stylesheet" >
+         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+		<script src="https://use.fontawesome.com/ee84922179.js"></script>
+    </head>
+    <body>
+     	<div th:replace="common/layout :: mynav"></div>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                   <div th:replace="common/layout :: mysidebar"></div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Visites</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="index.html">liste</a></li>
+                            <li class="breadcrumb-item active">recherche</li>
+                        </ol>
+                        <div class="row justify-content-center">
+                        <div class="col-md-12">
+                         <form class="row justify-content-around" th:action="${type != null}? @{/visite/{id}(id=${visit.id})} :@{/visite-ajout}" th:object="${visit}" method="post">
+                         	<div class="col-md-11 row">
+	                         	 <div class="form-group col-md-3">
+									    <label for="name">Immeuble</label>
+								    <select name="name" id="name" class="form-control">
+								    	<option th:each="building : ${buildings}"
+								    			th:text="${building.name}"
+								    			th:value="${building.name}">
+								    	</option>
+								    </select>
+								 </div>
+								  <div class="form-group col-md-2">
+									    <label for="cin">CIN du client</label>
+									    <input th:if="${type!=null}" type="text" class="form-control" id="cin" placeholder="cin" name="cin" th:value="${cin}">
+									    <input  th:if="${type==null}" type="text" class="form-control" id="cin" placeholder="cin" name="cin">
+								 </div>
+								 <div class="form-group col-md-3">
+									    <label for="numApart">Numéro d'appartement</label>
+									    <input  th:if="${type!=null}" type="number" class="form-control" id="numApart"  name="numApart" th:value="${number}">
+									    <input  th:if="${type==null}" type="number" class="form-control" id="numApart" placeholder="0" name="numApart">
+								 </div>
+								  <div class="form-group col-md-2">
+									 <label for="isInteressed">Interessé?</label>
+								    <input type="checkbox" id="isInteressed" class="form-control"  th:field="*{isInteressed}">
+								  </div>
+								   <div class="form-group col-md-5">
+									    <label for="remark">Remarque</label>
+									    <textarea rows="1" cols="50"class="form-control" id="remark" placeholder="Splendide" th:field="*{remark}"></textarea>
+								 </div>
+								 <div class="form-group col-md-3">
+								    <label for="mail">Agent</label>
+								    <select name="mail" id="mail" class="form-control">
+								    	<option th:each="user : ${users}"
+								    			th:text="${user.surname}"
+								    			th:value="${user.email}">
+								    	</option>
+								    </select>
+								</div>
+                         	</div>
+                       	    <div class="form-group col-md-10">
+							   <input type="submit" value="Enregistrer une visite" class="btn btn-primary btn-sm mb-3 text-light"/>&nbsp;
+							   <input type="reset" value="Annuler" class="btn btn-secondary btn-sm mb-3 text-light"/>
+						   </div>
+						</form>
+                        </div>
+                         <div class="card mb-4 col-md-11">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="usertable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Immeuble</th>
+                                                <th>Appartement</th>
+                                                <th>Date</th>
+                                                <th>Intéressé</th>
+                                                <th>Agent</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="visit : ${visits}">
+                                               <td th:text="${visit.apart.building.name}"></td>
+						                  		<td th:text="${visit.apart.number}"></td>
+						                  		<td th:text="${visit.dateVisit}"></td>
+						                  		<td th:if="${visit.isInteressed == true}" class="text-success">Oui</td>
+                                                <td th:if="${visit.isInteressed == false}" class="text-secondary">Non</td>
+                                             	<td>
+                                             		<span th:text="${visit.userVisit.surname}"></span>
+                                             		<span th:text="${visit.userVisit.firstname}"></span>
+                                             	</td>
+						                  		<td>
+						                  		 <a th:href="@{/visite/{id}(id=${visit.id})}"><i class="fa fa-edit text-primary"></i></a>
+		                   						 &nbsp;&nbsp;&nbsp;
+		                    					<a th:href="@{/liste-visites/{id}(id=${visit.id})}"><i class="fa fa-trash text-danger"></i></a>
+						                  		</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                </main>
+              <div th:replace="common/layout :: myfoot"></div>
+            </div> 
+        </div>
+         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+         <script th:src="@{/js/scripts.js}"></script>
+         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+        <script th:src="@{assets/demo/datatables-demo.js}"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('#usertable').DataTable( {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                }
+            } );
+
+        } );
+        </script>
+    </body>
+</html>
