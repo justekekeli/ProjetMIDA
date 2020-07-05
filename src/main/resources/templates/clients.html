@@ -51,7 +51,10 @@
 						                  			<span th:text="${customer.firstname1}"></span>
 						                  			<span th:text="${customer.firstname2}"></span>
 						                  		</td>
-						                  		<td th:text="${customer.userCustomer.surname}"></td>
+						                  		<td>
+						                  			<span th:text="${customer.userCustomer.surname}"></span>
+                                             		<span th:text="${customer.userCustomer.firstname}"></span>
+						                  		</td>
 						                  		<td th:text="${customer.tel}"></td>
 						                  		<td th:text="${customer.work}"></td>
 						                  		<td>

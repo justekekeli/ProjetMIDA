@@ -2,14 +2,19 @@ package com.mida.projetMIDA.models;
 
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Lawyer")
+@Table(name="lawyers")
 public class Lawyer {
 
 	//informations sur un avocat travaillant avec la société
@@ -23,6 +28,11 @@ public class Lawyer {
 	private String tel2;
 	private String tel3;
 	private String autorisation_num;
+	
+	//Un avocat intervient dans 1 ou plusieurs ventes
+		@OneToMany(mappedBy = "lawyer", fetch = FetchType.LAZY,
+			            cascade = CascadeType.ALL)
+	    private List<Agreement_selling> sellings;
 	
 	public Long getIdLawyer() {
 		return idLawyer;
@@ -72,7 +82,21 @@ public class Lawyer {
 	public void setAutorisation_num(String autorisation_num) {
 		this.autorisation_num = autorisation_num;
 	}
-	
+	public List<Agreement_selling> getSellings() {
+		return sellings;
+	}
+	public void addSellings(Agreement_selling selling) {
+		selling.setLawyer(this);
+		this.sellings.add(selling);
+
+	}
+	public void setSellings(List<Agreement_selling> sellings2) {
+		this.sellings=sellings2;
+		for(Agreement_selling s: sellings2) {
+			s.setLawyer(this);
+		}
+		
+	}
 	
 			
 }

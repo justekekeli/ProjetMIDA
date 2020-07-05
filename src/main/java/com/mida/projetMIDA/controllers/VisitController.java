@@ -8,66 +8,101 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mida.projetMIDA.Utils;
+import com.mida.projetMIDA.models.Apartment;
 import com.mida.projetMIDA.models.Visit;
+import com.mida.projetMIDA.services.ApartementService;
+import com.mida.projetMIDA.services.BuildingService;
+import com.mida.projetMIDA.services.CustomerService;
+import com.mida.projetMIDA.services.UserService;
 import com.mida.projetMIDA.services.VisitService;
 
 @Controller
-@RequestMapping("/Visites")
 public class VisitController {
 
 	@Autowired
 	private VisitService service;
-	
+	@Autowired
+	private BuildingService bservice;
+	@Autowired
+	private ApartementService aservice;
+	@Autowired
+	private CustomerService cservice;
+	@Autowired
+	private UserService uservice;
+
 	@GetMapping("/liste-visites")
     public String showVisits(ModelMap model) {
 		List<Visit> visits = service.getVisits();
+		model.addAttribute("visit", new Visit());
+		model.addAttribute("type",null);
+		model.addAttribute("buildings", bservice.getBuildings());
+		model.addAttribute("users", uservice.getUsers());
         model.put("visits",visits);
         return "visites";
     }
-	 @GetMapping(value = "/visite-ajout")
-	    public String showAddVisitPage(ModelMap model) {
-	        model.addAttribute("visit", new Visit());
-	        return "visite";
-	    }
 
-	    @DeleteMapping(value = "/liste-visites")
-	    public String deleteVisit(@RequestParam long id) {
-	        service.deleteVisit(id);
-	        return "visites";
-	    }
+    @GetMapping(value = "/liste-visites/{id}")
+    public String deleteVisit(@PathVariable(value="id") Long id) {
+        service.deleteVisit(id);
+        return "redirect:/liste-visites";
+    }
 
-	    @RequestMapping(value = "/visite/{id}", method = RequestMethod.GET)
-	    public String showUpdateVisitPage(@PathVariable(value="id") Long id, ModelMap model) {
-	        Visit v = service.getVisitById(id).get();
-	        model.put("visit",v);
-	        return "visite";
-	    }
-	    @PutMapping(value = "/visite/{id}")
-	    public String updateVisit(ModelMap model,@PathVariable(value="id") Long visit_id, @Valid @RequestBody Visit visit, BindingResult result) {
+    @RequestMapping(value = "/visite/{id}", method = RequestMethod.GET)
+    public String showUpdateVisitPage(@PathVariable(value="id") Long id, ModelMap model) {
+        Visit v = service.getVisitById(id).get();
+        model.put("visit",v);
+        model.addAttribute("type","edit");
+        model.put("visits",service.getVisits());
+        model.put("number",v.getApart().getNumber());
+        model.put("cin",v.getCustomer().getCin());
+        model.addAttribute("users", uservice.getUsers());
+		model.addAttribute("buildings", bservice.getBuildings());
+        return "visites";
+    }
+    @RequestMapping(value = "/visite/{id}")
+    public String updateVisit(ModelMap model,@PathVariable(value="id") Long visit_id, @RequestParam String cin,@RequestParam String mail, @RequestParam int numApart,@RequestParam String name,@Valid Visit visit, BindingResult result) {
 
-	        if (result.hasErrors()) {
-	            return "visite";
-	        }
-	        service.updateVisit(visit_id,visit);
-	        return "redirect:/liste";
-	    }
-	    @PostMapping(value = "/visite-ajout")
-	    public String addVisit(ModelMap model, @Valid @RequestBody Visit visit, BindingResult result) {
+        if (result.hasErrors()) {
+            return "visites";
+        }
+        Apartment apart=null;
+        List<Apartment> aparts= aservice.findByNumber(numApart);
+        for(Apartment a:aparts) {
+        	if(a.getBuilding()==bservice.getBuildingByName(name)) {
+        		apart=a;
+        	}
+        }
+        visit.setUserVisit(uservice.getUsersByEmail(mail));
+        visit.setApart(apart);
+        service.updateVisit(visit_id,visit);
+        return "redirect:/liste-visites";
+    }
+    @PostMapping(value = "/visite-ajout")
+    public String addVisit(ModelMap model, @Valid Visit visit, @RequestParam String cin,@RequestParam String mail,  @RequestParam int numApart,@RequestParam String name,BindingResult result) {
 
-	        if (result.hasErrors()) {
-	            return "visit";
-	        }
-	        service.saveVisit(visit);
-	        return "redirect:/liste";
-	    }
+        if (result.hasErrors()) {
+            return "visites";
+        }
+        Apartment apart=null;
+        List<Apartment> aparts= aservice.findByNumber(numApart);
+        for(Apartment a:aparts) {
+        	if(a.getBuilding()==bservice.getBuildingByName(name)) {
+        		apart=a;
+        	}
+        }
+        visit.setDateVisit(Utils.setDate());
+        visit.setUserVisit(uservice.getUsersByEmail(mail));
+        visit.setCustomer(cservice.getCustomersByCin(cin));
+        visit.setApart(apart);
+        service.saveVisit(visit);
+        return "redirect:/liste-visites";
+    }
 }

@@ -26,7 +26,7 @@ public class VisitService {
     public void updateVisit(Long id,Visit v) {
     	Visit u=repo.findById(id).orElse(null);
     	u.setDateVisit(v.getDateVisit());
-    	u.setInteressed(v.isInteressed());
+    	u.setisInteressed(v.getIsInteressed());
     	u.setRemark(v.getRemark());
         repo.save(u);
     }

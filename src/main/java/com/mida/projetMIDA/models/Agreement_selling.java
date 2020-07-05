@@ -2,14 +2,23 @@ package com.mida.projetMIDA.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.mida.projetMIDA.AgreementState;
+
 @Entity
-@Table(name="Agreement_selling")
+@Table(name="agreement_sellings")
 public class Agreement_selling {
 
 	//informations sur une promesse de vente d'appartement établi avec un client
@@ -20,7 +29,22 @@ public class Agreement_selling {
 		private double advanced;
 		private Date createdDate;
 		private Date updatedDate;
-		private String state;
+		@Enumerated(EnumType.STRING)
+		private AgreementState state;
+
+		//une vente fait intervenir un avocat
+		@ManyToOne(fetch = FetchType.LAZY)
+	    @JoinColumn(name = "lawyer_id")
+	    private Lawyer lawyer;
+		//une promesse de vente fait suite à une visite
+		@OneToOne(fetch = FetchType.LAZY, optional = false)
+	    @JoinColumn(name = "visit_id", nullable = false)
+	    private Visit visit;
+		//Une promesse de vente peut être annulée
+		@OneToOne(fetch = FetchType.LAZY,
+	            cascade =  CascadeType.ALL,
+	            mappedBy = "agreement")
+		private Cancellation cancel;
 		
 		//getters et setters
 		public Long getIdAgreement() {
@@ -53,11 +77,29 @@ public class Agreement_selling {
 		public void setUpdatedDate(Date updatedDate) {
 			this.updatedDate = updatedDate;
 		}
-		public String getState() {
+		public AgreementState getState() {
 			return state;
 		}
-		public void setState(String state) {
+		public void setState(AgreementState state) {
 			this.state = state;
+		}
+		public Visit getVisit() {
+			return visit;
+		}
+		public void setVisit(Visit visit) {
+			this.visit = visit;
+		}
+		public Lawyer getLawyer() {
+			return lawyer;
+		}
+		public void setLawyer(Lawyer lawyer) {
+			this.lawyer = lawyer;
+		}
+		public Cancellation getCancel() {
+			return cancel;
+		}
+		public void setCancel(Cancellation cancel) {
+			this.cancel = cancel;
 		}
 		
 }

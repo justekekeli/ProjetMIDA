@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mida.projetMIDA.Utils;
 import com.mida.projetMIDA.models.Customer;
 import com.mida.projetMIDA.models.User;
 import com.mida.projetMIDA.services.CustomerService;
@@ -70,6 +71,7 @@ public class CustomerController {
 	        if (result.hasErrors()) {
 	            return "client";
 	        }
+	        u.setCreatedDate(Utils.setDate());
 	        User user= uservice.getUsersByEmail(mail);
 	        u.setUserCustomer(user);
 	        service.addCustomer(u);

@@ -2,6 +2,10 @@ package com.mida.projetMIDA.models;
 
 
 
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,10 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Customer")
+@Table(name="customers")
 public class Customer {
 
 	//informations relatives à un client qui est intéréssé
@@ -26,10 +31,15 @@ public class Customer {
 	private String addressCustomer;
 	private String tel;
 	private String work;
+	private Date createdDate;
 	//un client est géré par un employé
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userCustomer_id")
     private User userCustomer;
+	//un client peut visiter plusieurs appartements
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Visit> visits;
 
 	//getters et setters 
 	public Long getIdCustomer() {
@@ -86,7 +96,19 @@ public class Customer {
 	public void setUserCustomer(User userCustomer) {
 		this.userCustomer = userCustomer;
 	}
-	
+	public List<Visit> getVisits() {
+		return visits;
+	}
+	public void addVisits(Visit v) {
+		v.setCustomer(this);
+		this.visits.add(v);
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
 			
 	

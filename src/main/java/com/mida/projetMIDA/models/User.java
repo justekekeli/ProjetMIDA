@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="User")
+@Table(name="users")
 public class User {
 	//informations sur un utilisateur de l'application
 	@Id
@@ -26,16 +26,16 @@ public class User {
 	private String profile;
 	private String address;
 	private boolean isAdmin;
-	private Date CreatedDate;
+	private Date createdDate;
 	
 	//Un utilisateur peut gérer 1 ou plusieurs clients
 	@OneToMany(mappedBy = "userCustomer", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Customer> customers;
 	//Un utilisateur non-admin peut gérer 1 ou plusieurs appartements
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+	@OneToMany(mappedBy = "userVisit", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<Apartment> apartments;
+    private List<Visit> visits;
 
 	//getters et setters (pour respectivement récupérer et modifier les infos)
 	public Long getIdUser() {
@@ -81,15 +81,15 @@ public class User {
 		this.address = address;
 	}
 	public Date getCreatedDate() {
-		return CreatedDate;
+		return createdDate;
 	}
 	public void setCreatedDate(Date createdDate) {
-		CreatedDate = createdDate;
+		this.createdDate = createdDate;
 	}
 	public boolean getIsAdmin() {
 		return isAdmin;
 	}
-	public void setAdmin(boolean isAdmin) {
+	public void setIsAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 
@@ -103,14 +103,14 @@ public class User {
 		this.customers.add(customers);
 	}
 	
-	public List<Apartment> getApartments() {
-		return apartments;
+	public List<Visit> getApartments() {
+		return visits;
 	}
-	public void setApartments(List<Apartment> apartments) {
-		this.apartments = apartments;
+	public void setVisits(List<Visit> visits) {
+		this.visits = visits;
 	}
-	public void addApartments(Apartment apart) {
-		this.apartments.add(apart);
+	public void addVisits(Visit v) {
+		this.visits.add(v);
 	}
 	
 }

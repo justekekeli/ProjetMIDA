@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mida.projetMIDA.Utils;
 import com.mida.projetMIDA.models.User;
 import com.mida.projetMIDA.services.UserService;
 
@@ -25,16 +26,12 @@ public class UserController {
         model.addAttribute("users", service.getUsers());
         return "utilisateurs";
     }
-	@GetMapping("/utilisateurs")
-    public String searchUsers(ModelMap model) {
-        return null;
+	@GetMapping(value = "/utilisateur-ajout")
+    public String showAddUserPage(ModelMap model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("type",null);
+        return "utilisateur";
     }
-	 @GetMapping(value = "/utilisateur-ajout")
-	    public String showAddUserPage(ModelMap model) {
-	        model.addAttribute("user", new User());
-	        model.addAttribute("type",null);
-	        return "utilisateur";
-	    }
 
 	    @GetMapping(value = "/liste-utilisateurs/{id}")
 	    public String deleteUser(@PathVariable(value="id") Long id) {
@@ -64,6 +61,7 @@ public class UserController {
 	        if (result.hasErrors()) {
 	            return "utilisateur";
 	        }
+	        u.setCreatedDate(Utils.setDate());
 	        service.saveUser(u);
 	        return "redirect:/liste-utilisateurs";
 	    }

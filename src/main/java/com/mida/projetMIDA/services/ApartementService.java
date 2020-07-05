@@ -17,6 +17,9 @@ public class ApartementService {
 	 	public List<Apartment> getApartments() {
 	        return repo.findAll();
 	    }
+	 	public List<Apartment> findByNumber(int number) {
+	        return repo.findByNumber(number);
+	    }
 	    public Optional<Apartment> getApartmentById(Long id) {
 	        return repo.findById(id);
 	    }
@@ -25,7 +28,7 @@ public class ApartementService {
 	    	Apartment e=repo.findById(id).orElse(null);
 	    	e.setPrice(a.getPrice());
 	    	e.setRooms(a.getRooms());
-	    	e.setStateApart(a.isStateApart());
+	    	e.setStateApart(a.getStateApart());
 	    	e.setSurface(a.getSurface());
 	    	e.setNumber(a.getNumber());
 	    	e.setUpdatedDate(a.getUpdatedDate());

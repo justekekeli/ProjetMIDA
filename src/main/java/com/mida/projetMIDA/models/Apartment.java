@@ -1,7 +1,9 @@
 package com.mida.projetMIDA.models;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,10 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Apartment")
+@Table(name="apartments")
 public class Apartment  {
 
 	//informations relatives à un appartement
@@ -24,17 +27,17 @@ public class Apartment  {
 	private int surface;
 	private int rooms;
 	private String price;
-	private boolean stateApart=false;
+	private boolean stateApart;
 	private Date updatedDate;
 	
-	//un appartement est attribué à un employé
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 	//un appartement est appartient à un immeuble
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "building_id")
 	private Building building;
+	//un client peut visiter plusieurs appartements
+	@OneToMany(mappedBy = "apart", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Visit> visits;
 	//getters et setters
 	
 	public int getSurface() {
@@ -67,17 +70,11 @@ public class Apartment  {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	public boolean isStateApart() {
+	public boolean getStateApart() {
 		return stateApart;
 	}
 	public void setStateApart(boolean stateApart) {
 		this.stateApart = stateApart;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	public Building getBuilding() {
 		return building;

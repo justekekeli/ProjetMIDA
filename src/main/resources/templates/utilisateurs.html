@@ -47,7 +47,7 @@
                                                 <td th:text="${user.firstname}"></td>
                                                 <td th:text="${user.email}"></td>
                                                 <td th:if="${user.isAdmin == true}"><i class="fa fa-check-circle text-success"></i></td>
-                                                <td th:if="${user.isAdmin == false}"><i class="fa fa-circle text-secondary"></i></td>
+                                                <td th:if="${user.isAdmin == false}"></td>
                                                 <td>
                                                  <a th:href="@{/utilisateur/{id}(id=${user.idUser})}"><i class="fa fa-edit text-primary"></i></a>
 		                   						 &nbsp;&nbsp;&nbsp;

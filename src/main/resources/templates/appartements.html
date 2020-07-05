@@ -64,8 +64,8 @@
                                 </div>
                             </div>
                         </div>
-                                                  <div class="col-md-12">
-                         <form class="row justify-content-around" th:action="${type != null}? @{/appartement/{id}(id=${apart.idApartment})} :@{/appartement-ajout}" th:object="${apartment}" method="post">
+                        <div class="col-md-12">
+                         <form class="row justify-content-around" th:action="${type != null}? @{/appartement/{id}(id=${apartment.idApartment})} :@{/appartement-ajout}" th:object="${apartment}" method="post">
                          	<div class="col-md-11 row" id="apartForm">
 	                         	 <div class="form-group col-md-3">
 									    <label for="name">Immeuble</label>
@@ -78,38 +78,31 @@
 								 </div>
 								 <div class="form-group col-md-3">
 									    <label for="surface">Aire en m<sup>2</sup></label>
-									    <input type="number" class="form-control" id="surface" placeholder="44" th:field="*{surface}">
+									    <input type="number" class="form-control" id="surface" th:field="*{surface}">
 								 </div>
 								 <div class="form-group col-md-3">
 									    <label for="rooms">Nombre de chambres</label>
-									    <input type="number" class="form-control" id="rooms" placeholder="44" th:field="*{rooms}">
+									    <input type="number" class="form-control" id="rooms"  th:field="*{rooms}">
 								 </div>
 								  <div class="form-group col-md-3">
 									    <label for="price">Prix (En FCFA)</label>
-									    <input type="number" class="form-control" id="price" placeholder="40000" th:field="*{price}">
+									    <input type="number" class="form-control" id="price"  th:field="*{price}">
 								 </div>
                          	</div>
                          	<div class="col-md-11 row">
                          	 	<div class="form-group col-md-3">
 									    <label for="step">Etage</label>
-									    <input type="number" class="form-control" id="step" placeholder="0" name="step">
+									    <input  th:if="${type!=null}" type="number" class="form-control" id="step"  name="step" th:value="${step}">
+									    <input  th:if="${type==null}" type="number" class="form-control" id="step"  name="step">
 								 </div>
 								 <div class="form-group col-md-3">
 									    <label for="num">Numéro Appartement</label>
-									    <input type="number" class="form-control" id="num" placeholder="0" name="num">
+									    <input  th:if="${type!=null}" type="number" class="form-control" id="num"  name="num" th:value="${number}">
+									    <input  th:if="${type==null}" type="number" class="form-control" id="num"  name="num">
 								 </div>
 								<div class="form-group col-md-2">
 									 <label for="stateApart">Occupé</label>
-								    <input type="checkbox" id="stateApart" class="form-control"  th:checked="${apartment.stateApart}">
-								  </div>
-	                         	 <div class="form-group col-md-3">
-								    <label for="mail">Agent</label>
-								    <select name="mail" id="mail" class="form-control">
-								    	<option th:each="user : ${users}"
-								    			th:text="${user.surname}"
-								    			th:value="${user.email}">
-								    	</option>
-								    </select>
+								    <input type="checkbox" id="stateApart" class="form-control" th:field="*{stateApart}">
 								</div>
                          	   </div>
                          	    <div class="form-group col-md-10">
