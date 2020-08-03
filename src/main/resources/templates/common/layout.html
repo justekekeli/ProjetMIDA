@@ -7,7 +7,7 @@
 <body>
 <div th:fragment="mynav">
        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
-            <a class="navbar-brand" href="index.html">AsacImmobilier</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" ><i class="fa fa-bars"></i></button
+            <a class="navbar-brand" th:href="@{/}">AsacImmobilier</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" ><i class="fa fa-bars"></i></button
             >
             <!-- Nav bar-->
             <ul class="navbar-nav ml-auto float-right">
@@ -16,7 +16,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="#">Settings</a><a class="dropdown-item" href="#">Activity Log</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="login.html">Logout</a>
+                        <a class="dropdown-item" th:href="@{/}">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -26,7 +26,7 @@
            <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Options</div>
-                            <a class="nav-link" href="index.html"
+                            <a class="nav-link" th:href="@{/}"
                                 ><span class="sb-nav-link-icon"><i class="fa fa-line-chart" aria-hidden="true"></i></span>
                                 Tableau de bord</a
                             >
@@ -37,7 +37,7 @@
                                 <span class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></span
                             ></a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" th:href="@{/client-ajout}">Ajout d'un client</a><a class="nav-link" th:href="@{/}">Rechercher client</a></nav>
+                                <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" th:href="@{/client-ajout}">Ajout d'un client</a><a class="nav-link" th:href="@{/clients}">Rechercher client</a></nav>
                             </div>
                              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePromesse" aria-expanded="false" aria-controls="collapseLayouts"
                                 ><span class="sb-nav-link-icon"><i class="fa fa-folder-open"></i></span>
@@ -67,7 +67,7 @@
                                 <span class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></span
                             ></a>
                             <div class="collapse" id="collapseAvocat" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" th:href="@{/avocat-ajout}" >Ajout</a><a class="nav-link" th:href="@{/liste-avocats}">Rechercher utilisateur</a></nav>
+                                <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" th:href="@{/avocat-ajout}" >Ajout</a><a class="nav-link" th:href="@{/liste-avocats}">Rechercher avocat</a></nav>
                             </div>
                              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseImmeuble" aria-expanded="false" aria-controls="collapseLayout"
                                 ><span class="sb-nav-link-icon"><i class="fa fa-building"></i></span>

@@ -20,6 +20,7 @@ import com.mida.projetMIDA.services.UserService;
 public class UserController {
 	@Autowired
 	private UserService service;
+
 	
 	@GetMapping("/liste-utilisateurs")
     public String showUsers(ModelMap model) {

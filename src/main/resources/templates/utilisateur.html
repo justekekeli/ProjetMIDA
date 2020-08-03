@@ -51,9 +51,18 @@
 								    <input type="email" class="form-control" id="email" placeholder="kek@gmail.com" th:field="*{email}">
 								  </div>
 								  <div class="form-group">
-								   <label for="isAdmin">Admin?</label>
-								    <input type="checkbox" id="isAdmin" class="form-control" th:field="*{isAdmin}">
-								  </div>
+									    <label for="name">Statut</label>
+								    <select  id="name" class="form-control" th:field="*{isAdmin}">
+								    	<option
+								    			th:text="Agent"
+								    			th:value="agent">
+								    	</option>
+								    	<option
+								    			th:text="Administrateur"
+								    			th:value="admin">
+								    	</option>
+								    </select>
+								 </div>
 								  <div class="form-group">
 								   <input type="submit" value="Enregistrer" class="btn btn-primary btn-sm mb-3 text-light"/>&nbsp;
 								   <input type="reset" value="Annuler" class="btn btn-secondary btn-sm mb-3 text-light"/>

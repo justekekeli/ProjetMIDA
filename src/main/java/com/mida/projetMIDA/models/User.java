@@ -25,7 +25,7 @@ public class User {
 	private String password;
 	private String profile;
 	private String address;
-	private boolean isAdmin;
+	private String isAdmin;
 	private Date createdDate;
 	
 	//Un utilisateur peut gérer 1 ou plusieurs clients
@@ -86,10 +86,10 @@ public class User {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public boolean getIsAdmin() {
+	public String getIsAdmin() {
 		return isAdmin;
 	}
-	public void setIsAdmin(boolean isAdmin) {
+	public void setIsAdmin(String isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 

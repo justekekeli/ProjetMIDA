@@ -15,11 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mida.projetMIDA.AgreementState;
 
 @Entity
 @Table(name="agreement_sellings")
-public class Agreement_selling {
+public class Agreement_selling{
 
 	//informations sur une promesse de vente d'appartement établi avec un client
 		@Id
@@ -33,14 +34,17 @@ public class Agreement_selling {
 		private AgreementState state;
 
 		//une vente fait intervenir un avocat
+		@JsonIgnore
 		@ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name = "lawyer_id")
 	    private Lawyer lawyer;
 		//une promesse de vente fait suite à une visite
+		@JsonIgnore
 		@OneToOne(fetch = FetchType.LAZY, optional = false)
 	    @JoinColumn(name = "visit_id", nullable = false)
 	    private Visit visit;
 		//Une promesse de vente peut être annulée
+		@JsonIgnore
 		@OneToOne(fetch = FetchType.LAZY,
 	            cascade =  CascadeType.ALL,
 	            mappedBy = "agreement")

@@ -29,7 +29,7 @@ public class CustomerController {
 	@Autowired
 	private UserService uservice;
 	
-	@GetMapping("/")
+	@GetMapping("/clients")
     public String showCustomers(ModelMap model) {
 		List<Customer> customers = service.getCustomers();
         model.put("customers",customers);
@@ -58,7 +58,7 @@ public class CustomerController {
 	        return "client";
 	    }
 	    @RequestMapping(value = "/client/{id}")
-	    public String updateCustomer(ModelMap model,@PathVariable(value="id") Long customer_id, @Valid Customer u, BindingResult result) {
+	    public String updateCustomer( @Valid Customer u, BindingResult result,ModelMap model,@PathVariable(value="id") Long customer_id) {
 	        if (result.hasErrors()) {
 	            return "client";
 	        }
@@ -66,7 +66,7 @@ public class CustomerController {
 	        return "redirect:/";
 	    }
 	    @PostMapping(value = "/client-ajout")
-	    public String addCustomer(ModelMap model, @Valid Customer u,@RequestParam String mail, BindingResult result) {
+	    public String addCustomer(@Valid Customer u, @RequestParam String mail,BindingResult result,ModelMap model) {
 
 	        if (result.hasErrors()) {
 	            return "client";

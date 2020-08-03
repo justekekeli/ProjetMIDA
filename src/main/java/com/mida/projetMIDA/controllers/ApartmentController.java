@@ -81,7 +81,7 @@ public class ApartmentController {
 	        service.updateApart(apart_id, u);
 	        return "redirect:/liste-appartements";
 	    }
-	    @PostMapping(value = "/appartement-ajout")
+	    @PostMapping("/appartement-ajout")
 	    public String addApart(ModelMap model, @Valid Apartment u,@RequestParam String name,@RequestParam int step,@RequestParam int num, BindingResult result) {
 
 	        if (result.hasErrors()) {

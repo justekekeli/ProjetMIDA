@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="customers")
@@ -24,12 +27,21 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idCustomer;
+	@Column(unique=true)
+	@NotBlank(message = "Ce champ ne peut être vide")
 	private String cin;
+	@NotBlank(message = "Le nom de fammille est obligatoire")
+	@Size(min = 3,message = "Le nom ne peut pas constituer moins de 3 lettres")
 	private String surname;
+	@NotBlank(message = "Ce champ est obligatoire")
+	@Size(min = 3,message = "Le prenom ne peut pas constituer moins de 3 lettres")
 	private String firstname1;
 	private String firstname2;
+	@NotBlank(message = "Ce champ est obligatoire")
 	private String addressCustomer;
+	@NotBlank(message = "Ce champ est obligatoire")
 	private String tel;
+	@NotBlank(message = "Ce champ est obligatoire")
 	private String work;
 	private Date createdDate;
 	//un client est géré par un employé
