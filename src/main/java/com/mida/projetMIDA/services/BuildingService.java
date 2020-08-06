@@ -13,6 +13,10 @@ import com.mida.projetMIDA.repositories.BuildingRepository;
 public class BuildingService {
 	@Autowired
 	private BuildingRepository repo;
+		
+		public int lenghtList() {
+			return this.getBuildings().size();
+		}
 	
 		public Building getBuildingByName(String name) {
 	        return repo.findByName(name);

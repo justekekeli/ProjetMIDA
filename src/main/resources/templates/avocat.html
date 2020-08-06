@@ -24,13 +24,13 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">Avocats</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a th:href="@{/}">liste</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/Avocat/liste-avocats}">liste</a></li>
                             <li class="breadcrumb-item active" th:if="${type!=null}">Modification</li>
                             <li class="breadcrumb-item active" th:if="${type==null}">Ajout</li>
                         </ol>
                         <div class="row justify-content-center">
                             <div class="col-md-10">
-                              <form class="row justify-content-around" th:action="${type != null}? @{/avocat/{id}(id=${lawyer.idLawyer})} :@{/avocat-ajout}" th:object="${lawyer}" method="post">
+                              <form class="row justify-content-around" th:action="${type != null}? @{/Avocat/avocat/{id}(id=${lawyer.idLawyer})} :@{/Avocat/avocat-ajout}" th:object="${lawyer}" method="post">
                               	<div class="col-md-5">
 								  <div class="form-group">
 								    <label for="autorisation_num">Numéro d'autorisation</label>

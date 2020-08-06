@@ -23,7 +23,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Utilisateurs</h1>&nbsp;<a th:href="@{/utilisateur-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un utilisateur</a>
+                        <h1 class="mt-4">Utilisateurs</h1>&nbsp;<a th:href="@{/Utilisateurs/utilisateur-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un utilisateur</a>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">liste</a></li>
                             <li class="breadcrumb-item active">recherche</li>
@@ -37,7 +37,7 @@
                                                 <th>Nom</th>
                                                 <th>Prénom</th>
                                                 <th>Email</th>
-                                                <th>Admin</th>
+                                               <!--  <th>Admin</th>--> 
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -46,8 +46,8 @@
                                                 <td th:text="${user.surname}"></td>
                                                 <td th:text="${user.firstname}"></td>
                                                 <td th:text="${user.email}"></td>
-                                                <td th:if="${user.isAdmin == 'admin'}"><i class="fa fa-check-circle text-success"></i></td>
-                                                <td th:if="${user.isAdmin == 'agent'}"></td>
+                                              <!--   <td th:if="${#arrays.contains(user.roles.id, 'Europe')}"><i class="fa fa-check-circle text-success"></i></td>
+                                                <td th:if="${user.isAdmin == 'agent'}"></td>--> 
                                                 <td>
                                                  <a th:href="@{/utilisateur/{id}(id=${user.idUser})}"><i class="fa fa-edit text-primary"></i></a>
 		                   						 &nbsp;&nbsp;&nbsp;

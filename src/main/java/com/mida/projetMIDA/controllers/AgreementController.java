@@ -25,6 +25,7 @@ import com.mida.projetMIDA.services.VisitService;
 
 
 @Controller
+@RequestMapping("Promesse")
 public class AgreementController {
 
 	@Autowired
@@ -36,8 +37,13 @@ public class AgreementController {
 	@Autowired
 	private CancellationService cservice;
 
-	@GetMapping("/liste-promesses")
-    public String showAgreements(ModelMap model) {
+	@GetMapping(value = {"/liste-promesses", "/liste-promesses/{cin}/{visite}/{immeuble}/{apart}"})
+    public String showAgreements(@PathVariable(name="cin", required = false) String cin,
+    		@PathVariable(name="visite", required = false) String visite,
+    		@PathVariable(name="immeuble", required = false) String immeuble,
+    		@PathVariable(name="apart", required = false) String apart,
+    		ModelMap model
+    		) {
 		model.addAttribute("agreement", new Agreement_selling());
 		model.addAttribute("type",null);
 		model.addAttribute("lawyers", lservice.getLawyers());
@@ -48,7 +54,7 @@ public class AgreementController {
     @GetMapping(value = "/liste-promesses/{id}")
     public String deleteAgreement(@PathVariable(value="id") Long id) {
         service.deleteAgreement(id);
-        return "redirect:/liste-visites";
+        return "redirect:/Promesse/liste-promesses";
     }
 
     @RequestMapping(value = "/promesse/{id}", method = RequestMethod.GET)
@@ -85,7 +91,7 @@ public class AgreementController {
             visit.getApart().setStateApart(true);
         }
         service.updateAgreement(id, ag);
-        return "redirect:/liste-promesses";
+        return "redirect:/Promesse/liste-promesses";
     }
     @PostMapping(value = "/promesse-ajout")
     public String addAgreement(ModelMap model, @Valid Agreement_selling ag, @RequestParam Long lawyer, @RequestParam Long visit_id, BindingResult result) {
@@ -97,6 +103,6 @@ public class AgreementController {
         ag.setLawyer(lservice.getLawyerById(lawyer).get());
         ag.setVisit(vservice.getVisitById(visit_id).get());
         service.addAgreement(ag);
-        return "redirect:/liste-promesses";
+        return "redirect:/Promesse/liste-promesses";
     }
 }

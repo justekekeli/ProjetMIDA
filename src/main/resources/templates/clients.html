@@ -23,7 +23,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Clients</h1>&nbsp;<a th:href="@{/client-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un client</a>
+                        <h1 class="mt-4">Clients</h1>&nbsp;<a th:href="@{/Clients/client-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un client</a>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a th:href="@{/liste-utilisateurs}">liste</a></li>
                             <li class="breadcrumb-item active">recherche</li>
@@ -31,7 +31,7 @@
                          <div class="card mb-4">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="usertable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered text-center" id="usertable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>CIN</th>
@@ -58,9 +58,11 @@
 						                  		<td th:text="${customer.tel}"></td>
 						                  		<td th:text="${customer.work}"></td>
 						                  		<td>
-						                  		 <a th:href="@{/client/{id}(id=${customer.idCustomer})}"><i class="fa fa-edit text-primary"></i></a>
+						                  		<a th:href="@{/Visite/liste-visites/{cinClient}(cinClient=${customer.cin})}" class="btn btn-secondary">Réaliser une visite</a>
+		                   						 <br/>
+						                  		 <a th:href="@{/Clients/client/{id}(id=${customer.idCustomer})}"><i class="fa fa-edit text-primary ml-5"></i></a>
 		                   						 &nbsp;&nbsp;&nbsp;
-		                    					<a th:href="@{/liste-clients/{id}(id=${customer.idCustomer})}"><i class="fa fa-trash text-danger"></i></a>
+		                    					<a th:href="@{/Clients/liste-clients/{id}(id=${customer.idCustomer})}"><i class="fa fa-trash text-danger"></i></a>
 						                  		</td>
                                             </tr>
                                         </tbody>

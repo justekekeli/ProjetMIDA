@@ -23,7 +23,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Immeubles</h1>&nbsp;<a th:href="@{/immeuble-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un immeuble</a>
+                        <h1 class="mt-4">Immeubles</h1>&nbsp;<a th:href="@{/Immeuble/immeuble-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un immeuble</a>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">liste</a></li>
                             <li class="breadcrumb-item active">recherche</li>
@@ -44,9 +44,9 @@
                                                 <td th:text="${building.name}"></td>
                                                 <td th:text="${building.address}"></td>
                                                 <td>
-                                                 <a th:href="@{/immeuble/{id}(id=${building.idBuilding})}"><i class="fa fa-edit text-primary"></i></a>
+                                                 <a th:href="@{/Immeuble/immeuble/{id}(id=${building.idBuilding})}"><i class="fa fa-edit text-primary"></i></a>
 		                   						 &nbsp;&nbsp;&nbsp;
-		                    					<a th:href="@{/liste-immeubles/{id}(id=${building.idBuilding})}"><i class="fa fa-trash text-danger"></i></a>
+		                    					<a th:href="@{/Immeuble/liste-immeubles/{id}(id=${building.idBuilding})}"><i class="fa fa-trash text-danger"></i></a>
 		                    					&nbsp;&nbsp;&nbsp;
 		                    					<a title="Voir la liste des appartements"><i class="fa fa-list-alt text-secondary"></i></a>
 						                  		</td>

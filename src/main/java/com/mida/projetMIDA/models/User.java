@@ -1,5 +1,6 @@
 package com.mida.projetMIDA.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.*;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,12 +25,17 @@ public class User {
 	private String surname;
 	private String firstname;
 	private String email;
-	private String password;
-	private String profile;
+	private String pass;
 	private String address;
-	private String isAdmin;
 	private Date createdDate;
-	
+	//un utilisateur peut avoir plusieurs roles
+	@ManyToMany(cascade=CascadeType.ALL,fetch =FetchType.EAGER) 
+	@JoinTable(
+			name="roles_users",
+			joinColumns= @JoinColumn(name="user_id"),
+			inverseJoinColumns= @JoinColumn(name="role_id")
+			)
+	  private List<Role> roles =new ArrayList<>();
 	//Un utilisateur peut gérer 1 ou plusieurs clients
 	@OneToMany(mappedBy = "userCustomer", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
@@ -62,17 +70,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
-		return password;
+	public String getPass() {
+		return pass;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getProfile() {
-		return profile;
-	}
-	public void setProfile(String profile) {
-		this.profile = profile;
+	public void setPass(String password) {
+		this.pass = password;
 	}
 	public String getAddress() {
 		return address;
@@ -86,13 +88,6 @@ public class User {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public String getIsAdmin() {
-		return isAdmin;
-	}
-	public void setIsAdmin(String isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
 	public List<Customer> getCustomers() {
 		return customers;
 	}
@@ -111,6 +106,12 @@ public class User {
 	}
 	public void addVisits(Visit v) {
 		this.visits.add(v);
+	}
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

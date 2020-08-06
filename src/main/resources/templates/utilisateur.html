@@ -24,13 +24,13 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">Utilisateurs</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a th:href="@{/liste-utilisateurs}">liste</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/Utilisateurs/liste-utilisateurs}">liste</a></li>
                             <li class="breadcrumb-item active" th:if="${type!=null}">Modification</li>
                             <li class="breadcrumb-item active" th:if="${type==null}">Ajout</li>
                         </ol>
                         <div class="row justify-content-center">
                             <div class="col-md-10">
-                              <form class="row justify-content-around" th:action="${type != null}? @{/utilisateur/{id}(id=${user.idUser})} :@{/utilisateur-ajout}" th:object="${user}" method="post">
+                              <form class="row justify-content-around" th:action="${type != null}? @{/Utilisateurs/utilisateur/{id}(id=${user.idUser})} :@{/Utilisateurs/utilisateur-ajout}" th:object="${user}" method="post">
                               	<div class="col-md-5">
 								  <div class="form-group">
 								    <label for="surname">Nom de Famille</label>
@@ -39,6 +39,10 @@
 								   <div class="form-group">
 								    <label for="firstname">Prénom </label>
 								    <input type="text" class="form-control" id="firstname" placeholder="Apéfa" th:field="*{firstname}">
+								  </div>
+								  <div class="form-group">
+								    <label for="pass">Mot de passe </label>
+								    <input autocomplete="off" type="text" class="form-control" id="pass"  th:field="*{pass}">
 								  </div>
 								  </div>
 								 <div class="col-md-5">
@@ -51,15 +55,19 @@
 								    <input type="email" class="form-control" id="email" placeholder="kek@gmail.com" th:field="*{email}">
 								  </div>
 								  <div class="form-group">
-									    <label for="name">Statut</label>
-								    <select  id="name" class="form-control" th:field="*{isAdmin}">
+									    <label for="statut">Statut</label>
+								    <select  id="statut" class="form-control" name="statut">
 								    	<option
 								    			th:text="Agent"
-								    			th:value="agent">
+								    			th:value="AGENT">
 								    	</option>
 								    	<option
 								    			th:text="Administrateur"
-								    			th:value="admin">
+								    			th:value="ADMIN">
+								    	</option>
+								    	<option
+								    			th:text="Sécrétaire"
+								    			th:value="SECRETAIRE">
 								    	</option>
 								    </select>
 								 </div>

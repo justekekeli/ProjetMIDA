@@ -25,7 +25,7 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">Appartements</h1>&nbsp;<a href="#apartForm" class="btn btn-success btn-sm mb-3 text-light">Ajouter appartement</a>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">liste</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/Appartement/liste-appartements}">liste</a></li>
                             <li class="breadcrumb-item active">recherche</li>
                         </ol>
                         <div class="row justify-content-center">
@@ -54,9 +54,9 @@
                                                 <td th:if="${apart.stateApart == false}" class="text-secondary">Non occupé</td>
 						                  		<td th:text="${apart.price}"></td>
 						                  		<td>
-						                  		 <a th:href="@{/appartement/{id}(id=${apart.idApartment})}"><i class="fa fa-edit text-primary"></i></a>
+						                  		 <a th:href="@{/Appartement/appartement/{id}(id=${apart.idApartment})}"><i class="fa fa-edit text-primary"></i></a>
 		                   						 &nbsp;&nbsp;&nbsp;
-		                    					<a th:href="@{/liste-appartements/{id}(id=${apart.idApartment})}"><i class="fa fa-trash text-danger"></i></a>
+		                    					<a th:href="@{/Appartement/liste-appartements/{id}(id=${apart.idApartment})}"><i class="fa fa-trash text-danger"></i></a>
 						                  		</td>
                                             </tr>
                                         </tbody>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                         <form class="row justify-content-around" th:action="${type != null}? @{/appartement/{id}(id=${apartment.idApartment})} :@{/appartement-ajout}" th:object="${apartment}" method="post">
+                         <form class="row justify-content-around" th:action="${type != null}? @{/Appartement/appartement/{id}(id=${apartment.idApartment})} :@{/Appartement/appartement-ajout}" th:object="${apartment}" method="post">
                          	<div class="col-md-11 row" id="apartForm">
 	                         	 <div class="form-group col-md-3">
 									    <label for="name">Immeuble</label>

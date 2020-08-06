@@ -18,6 +18,7 @@ import com.mida.projetMIDA.models.Lawyer;
 import com.mida.projetMIDA.services.LawyerService;
 
 @Controller
+@RequestMapping("Avocat")
 public class LawyerController {
 
 	@Autowired

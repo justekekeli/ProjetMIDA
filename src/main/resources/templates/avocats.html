@@ -23,7 +23,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Avocats</h1>&nbsp;<a th:href="@{/avocat-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un avocat</a>
+                        <h1 class="mt-4">Avocats</h1>&nbsp;<a th:href="@{/Avocat/avocat-ajout}" class="btn btn-success btn-sm mb-3 text-light">Ajouter un avocat</a>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">liste</a></li>
                             <li class="breadcrumb-item active">recherche</li>
@@ -52,7 +52,7 @@
 						                  			<span th:text="${lawyer.tel3}"></span>
 						                  		</td>
 						                  		<td>
-						                  		 <a th:href="@{/avocat/{id}(id=${lawyer.idLawyer})}"><i class="fa fa-edit text-primary"></i>Modifier</a>
+						                  		 <a th:href="@{/Avocat/avocat/{id}(id=${lawyer.idLawyer})}"><i class="fa fa-edit text-primary"></i>Modifier</a>
 		                   						 &nbsp;&nbsp;&nbsp;
 		                    					<a th:href="@{/liste-avocats/{id}(id=${lawyer.idLawyer})}"><i class="fa fa-trash text-danger"></i>Supprimer</a>
 						                  		</td>

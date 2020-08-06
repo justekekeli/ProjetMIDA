@@ -30,7 +30,7 @@
                         </ol>
                         <div class="row justify-content-center">
                         <div class="col-md-12">
-                         <form class="row justify-content-around" th:action="${type != null}? @{/visite/{id}(id=${visit.id})} :@{/visite-ajout}" th:object="${visit}" method="post">
+                         <form class="row justify-content-around" th:action="${type != null}? @{/Visite/visite/{id}(id=${visit.id})} :@{/Visite/visite-ajout}" th:object="${visit}" method="post">
                          	<div class="col-md-11 row">
 	                         	 <div class="form-group col-md-3">
 									    <label for="name">Immeuble</label>
@@ -43,8 +43,9 @@
 								 </div>
 								  <div class="form-group col-md-2">
 									    <label for="cin">CIN du client</label>
-									    <input th:if="${type!=null}" type="text" class="form-control" id="cin" placeholder="cin" name="cin" th:value="${cin}">
-									    <input  th:if="${type==null}" type="text" class="form-control" id="cin" placeholder="cin" name="cin">
+									    <input th:if="${cinClient!=null}" type="text" class="form-control" id="cin" placeholder="cin" name="cin" th:value="${cinClient}" readonly="readonly">
+									    <input th:if="${cinClient==null}" type="text" class="form-control" id="cin" placeholder="cin" name="cin" th:value="${cin}">
+									   <!-- <input  th:if="${type==null}" type="text" class="form-control" id="cin" placeholder="cin" name="cin"> --> 
 								 </div>
 								 <div class="form-group col-md-3">
 									    <label for="numApart">Numéro d'appartement</label>
@@ -59,14 +60,9 @@
 									    <label for="remark">Remarque</label>
 									    <textarea rows="1" cols="50"class="form-control" id="remark" placeholder="Splendide" th:field="*{remark}"></textarea>
 								 </div>
-								 <div class="form-group col-md-3">
+								 <div class="form-group col-md-3" sec:authorize="isAuthenticated()">
 								    <label for="mail">Agent</label>
-								    <select name="mail" id="mail" class="form-control">
-								    	<option th:each="user : ${users}"
-								    			th:text="${user.surname}"
-								    			th:value="${user.email}">
-								    	</option>
-								    </select>
+								    <input type="email" name="mail" id="mail" class="form-control" th:value="${#authentication.getPrincipal().getUsername()}" readonly="readonly"/>
 								</div>
                          	</div>
                        	    <div class="form-group col-md-10">
@@ -101,9 +97,12 @@
                                              		<span th:text="${visit.userVisit.firstname}"></span>
                                              	</td>
 						                  		<td>
-						                  		 <a th:href="@{/visite/{id}(id=${visit.id})}"><i class="fa fa-edit text-primary"></i></a>
+						                  		 <a th:href="@{/Visite/visite/{id}(id=${visit.id})}"><i class="fa fa-edit text-primary"></i></a>
 		                   						 &nbsp;&nbsp;&nbsp;
-		                    					<a th:href="@{/liste-visites/{id}(id=${visit.id})}"><i class="fa fa-trash text-danger"></i></a>
+		                    					<a th:href="@{/Visite/liste-visite/{id}(id=${visit.id})}"><i class="fa fa-trash text-danger"></i></a>
+		                    					 &nbsp;&nbsp;&nbsp;
+		                    					<a th:href="@{/Promesse/liste-promesses/{cin}/{visite}/{immeuble}/{apart}(cin=${visit.customer.cin},visite=${visit.id},immeuble=${visit.apart.building.name},apart=${visit.apart.number})}" title="Réaliser une promesse de vente"><i class="fa fa-cart-plus text-success"></i>Promesse</a>
+		                    					
 						                  		</td>
                                             </tr>
                                         </tbody>

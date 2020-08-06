@@ -17,6 +17,7 @@ import com.mida.projetMIDA.models.Building;
 import com.mida.projetMIDA.services.BuildingService;
 
 @Controller
+@RequestMapping("Immeuble")
 public class BuildingController {
 	@Autowired
 	private BuildingService service;

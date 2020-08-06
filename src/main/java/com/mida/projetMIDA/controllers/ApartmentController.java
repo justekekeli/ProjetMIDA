@@ -22,6 +22,7 @@ import com.mida.projetMIDA.services.BuildingService;
 
 
 @Controller
+@RequestMapping("Appartement")
 public class ApartmentController {
 	@Autowired
 	private ApartementService service;

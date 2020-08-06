@@ -10,47 +10,6 @@
         <link th:href="@{/css/styles.css}" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://use.fontawesome.com/ee84922179.js"></script>
-        <style type="text/css">	
-			.buttons {
-			  min-width: 310px;
-			  text-align: center;
-			  margin-bottom: 1.5rem;
-			  font-size: 0;
-			}
-			
-			.buttons button {
-			  cursor: pointer;
-			  border: 1px solid silver;
-			  border-right-width: 0;
-			  background-color: #f8f8f8;
-			  font-size: 1rem;
-			  padding: 0.5rem;
-			  outline: none;
-			  transition-duration: 0.3s;
-			}
-			
-			.buttons button:first-child {
-			  border-top-left-radius: 0.3em;
-			  border-bottom-left-radius: 0.3em;
-			}
-			
-			.buttons button:last-child {
-			  border-top-right-radius: 0.3em;
-			  border-bottom-right-radius: 0.3em;
-			  border-right-width: 1px;
-			}
-			
-			.buttons button:hover {
-			  color: white;
-			  background-color: rgb(158, 159, 163);
-			  outline: none;
-			}
-			
-			.buttons button.active {
-			  background-color: #0051B4;
-			  color: white;
-			}
-        </style>
     </head>
     <body class="sb-nav-fixed">
         <div th:replace="common/layout :: mynav"></div>
@@ -65,77 +24,52 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">Tableau de bord</h1>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-info text-white mb-4">
                                     <div class="card-body">
                                     <h2>Clients</h2>
-                                    <span>334</span>
+                                    <span th:text="${sizeCustomer}">334</span>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Plus d'info...</a>
+                                        <a class="small text-white stretched-link" th:href="@{/Clients/clients}">Plus d'info...</a>
                                         <div class="small text-white"><i class="fa fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-secondary text-white mb-4">
                                     <div class="card-body">
                                     <h2>Ventes</h2>
-                                    <span>34</span>
+                                    <span th:text="${sizeAgreement}">34</span>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Plus d'info...</a>
+                                        <a class="small text-white stretched-link" th:href="@{/Promesse/liste-promesses}">Plus d'info...</a>
                                         <div class="small text-white"><i class="fa fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-dark text-white mb-4">
                                     <div class="card-body">
                                     <h2>Immeubles</h2>
-                                    <span>15</span>
+                                    <span th:text="${sizeBuilding}">15</span>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Plus d'info...</a>
+                                        <a class="small text-white stretched-link" th:href="@{/Immeuble/liste-immeubles}">Plus d'info...</a>
                                         <div class="small text-white"><i class="fa fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">
                                     <h2>Agents</h2>
-                                    <span>334</span>
+                                    <span th:text="${sizeUser}">334</span>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Plus d'info...</a>
+                                        <a class="small text-white stretched-link" th:href="@{/Utilisateurs/liste-utilisateurs}">Plus d'info...</a>
                                         <div class="small text-white"><i class="fa fa-angle-right"></i></div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-xl-12">
-                                <div class="card mb-4 row justify-content-center">
-                                    <div class="card-header bg-success text-white"><i class="fa fa-chart-bar mr-1"></i>Statistiques</div>
-                                    <div class="buttons col-xl-12 mt-3">
-									  <button id="2000" class="btn">
-									  2000
-									  </button>
-									  <button id="2004" class="btn">
-									  2004
-									  </button>
-									  <button id="2008" class="btn">
-									  2008
-									  </button>
-									  <button id="2012" class="btn">
-									  2012
-									  </button>
-									  <button id="2016" class="btn active" >
-									  2016
-									  </button>
-									</div>
-									<div id="container" class="col-xl-12"></div>
                                 </div>
                             </div>
                         </div>

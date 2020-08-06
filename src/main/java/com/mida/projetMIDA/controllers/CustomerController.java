@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,7 @@ import com.mida.projetMIDA.services.UserService;
 
 
 @Controller
+@RequestMapping("Clients")
 public class CustomerController {
 	@Autowired
 	private CustomerService service;
@@ -46,7 +48,7 @@ public class CustomerController {
 	    @GetMapping( "/liste-clients/{id}")
 	    public String deleteCustomer(@PathVariable(value="id") Long id) {
 	        service.deleteCustomer(id);
-	        return "redirect:/";
+	        return "redirect:/Clients/clients";
 	    }
 
 	    @GetMapping("/client/{id}")
@@ -57,16 +59,16 @@ public class CustomerController {
 	        model.addAttribute("type","edit");
 	        return "client";
 	    }
-	    @RequestMapping(value = "/client/{id}")
+	    @PostMapping(value = "/client/{id}")
 	    public String updateCustomer( @Valid Customer u, BindingResult result,ModelMap model,@PathVariable(value="id") Long customer_id) {
 	        if (result.hasErrors()) {
 	            return "client";
 	        }
 	        service.updateCustomer(customer_id, u);
-	        return "redirect:/";
+	        return "redirect:/Clients/clients";
 	    }
 	    @PostMapping(value = "/client-ajout")
-	    public String addCustomer(@Valid Customer u, @RequestParam String mail,BindingResult result,ModelMap model) {
+	    public String addCustomer(@RequestParam String mail,@Valid Customer u, BindingResult result,ModelMap model) {
 
 	        if (result.hasErrors()) {
 	            return "client";
@@ -75,6 +77,6 @@ public class CustomerController {
 	        User user= uservice.getUsersByEmail(mail);
 	        u.setUserCustomer(user);
 	        service.addCustomer(u);
-	        return "redirect:/";
+	        return "redirect:/Clients/clients";
 	    }
 }

@@ -25,6 +25,7 @@ import com.mida.projetMIDA.services.UserService;
 import com.mida.projetMIDA.services.VisitService;
 
 @Controller
+@RequestMapping("Visite")
 public class VisitController {
 
 	@Autowired
@@ -38,8 +39,8 @@ public class VisitController {
 	@Autowired
 	private UserService uservice;
 
-	@GetMapping("/liste-visites")
-    public String showVisits(ModelMap model) {
+	@GetMapping(value = {"/liste-visites", "/liste-visites/{cinClient}"})
+    public String showVisits(@PathVariable(name="cinClient", required = false) String cin,ModelMap model) {
 		List<Visit> visits = service.getVisits();
 		model.addAttribute("visit", new Visit());
 		model.addAttribute("type",null);
@@ -49,10 +50,10 @@ public class VisitController {
         return "visites";
     }
 
-    @GetMapping(value = "/liste-visites/{id}")
+    @GetMapping(value = "/liste-visite/{id}")
     public String deleteVisit(@PathVariable(value="id") Long id) {
         service.deleteVisit(id);
-        return "redirect:/liste-visites";
+        return "redirect:/Visite/liste-visites";
     }
 
     @RequestMapping(value = "/visite/{id}", method = RequestMethod.GET)
@@ -83,7 +84,7 @@ public class VisitController {
         visit.setUserVisit(uservice.getUsersByEmail(mail));
         visit.setApart(apart);
         service.updateVisit(visit_id,visit);
-        return "redirect:/liste-visites";
+        return "redirect:/Visite/liste-visites";
     }
     @PostMapping(value = "/visite-ajout")
     public String addVisit(ModelMap model, @Valid Visit visit, @RequestParam String cin,@RequestParam String mail,  @RequestParam int numApart,@RequestParam String name,BindingResult result) {
@@ -103,6 +104,6 @@ public class VisitController {
         visit.setCustomer(cservice.getCustomersByCin(cin));
         visit.setApart(apart);
         service.saveVisit(visit);
-        return "redirect:/liste-visites";
+        return "redirect:/Visite/liste-visites";
     }
 }

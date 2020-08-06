@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -24,13 +25,13 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">Clients</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a th:href="@{/}">liste</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/Clients/clients}">liste</a></li>
                             <li class="breadcrumb-item active" th:if="${type!=null}">Modification</li>
                             <li class="breadcrumb-item active" th:if="${type==null}">Ajout</li>
                         </ol>
                         <div class="row justify-content-center">
                             <div class="col-md-10">
-                              <form class="row justify-content-around" th:action="${type != null}? @{/client/{id}(id=${customer.idCustomer})} :@{/client-ajout}" th:object="${customer}" method="post">
+                              <form class="row justify-content-around" th:action="${type != null}? @{/Clients/client/{id}(id=${customer.idCustomer})} :@{/Clients/client-ajout}" th:object="${customer}" method="post">
                               	<div class="col-md-5">
 								  <div class="form-group">
 								    <label for="cin">CIN</label>
@@ -40,7 +41,7 @@
 								  <div class="form-group">
 								    <label for="surname">Nom de Famille</label>
 								    <input type="text" class="form-control" id="surname" placeholder="AFONOUVI" th:field="*{surname}">
-								 	<span th:if="${#fields.hasErrors('surname')}" class="invalid-feedback" th:errors="*{surname}"> </span>
+								 	<p th:if="${#fields.hasErrors('surname')}" class="invalid-feedback" th:errors="*{surname}"> </p>
 								  </div>
 								   <div class="form-group">
 								    <label for="firstname1">Prénom </label>
@@ -69,14 +70,9 @@
 								    <input type="text" class="form-control" id="work" placeholder="Entrepreneur" th:field="*{work}">
 								 	<span th:if="${#fields.hasErrors('work')}" class="invalid-feedback" th:errors="*{work}"> </span>
 								  </div>
-								   <div class="form-group">
+								   <div class="form-group" sec:authorize="isAuthenticated()">
 								    <label for="mail">Agent</label>
-								    <select name="mail" id="mail" class="form-control">
-								    	<option th:each="user : ${users}"
-								    			th:text="${user.surname}"
-								    			th:value="${user.email}">
-								    	</option>
-								    </select>
+								    <input type="email" name="mail" id="mail" class="form-control" th:value="${#authentication.getPrincipal().getUsername()}" readonly="readonly"/>
 								  </div>
 								  <div class="form-group">
 								   <input type="submit" value="Enregistrer" class="btn btn-primary btn-sm mb-3 text-light"/>&nbsp;

@@ -30,12 +30,13 @@
                         </ol>
                         <div class="row justify-content-center">
                          <div class="col-md-12">
-                         <form class="row justify-content-around" th:action="${type != null}? @{/promesse/{id}(id=${agreement.idAgreement})} :@{/promesse-ajout}" th:object="${agreement}" method="post">
+                         <form class="row justify-content-around" th:action="${type != null}? @{/Promesse/promesse/{id}(id=${agreement.idAgreement})} :@{/Promesse/promesse-ajout}" th:object="${agreement}" method="post">
                          	<div class="col-md-11 row">	
 								  <div class="form-group col-md-2">
 									    <label for="nameCustomer">Client</label>
-									    <input th:if="${type!=null}" type="text" class="form-control" id="nameCustomer" placeholder="nom du client" name="nameCustomer" th:value="${cin}">
-									    <input  th:if="${type==null}" type="text" class="form-control" id="nameCustomer" placeholder="nom du client" name="nameCustomer">
+									    <input type="text" class="form-control" id="nameCustomer" placeholder="CIN du client" name="nameCustomer" th:value="${cin}">
+									 <!-- <input th:if="${cinClient!=null} type="text" class="form-control" id="nameCustomer" placeholder="CIN du client" name="nameCustomer" th:value="${cinClient}">
+									 th:if="${type!=null}"  <input  th:if="${type==null}" type="text" class="form-control" id="nameCustomer" placeholder="CIN du client" name="nameCustomer">--> 
 								 </div>
 								 <div class="form-group col-md-3">
 									    <label for="name">Avocat</label>
@@ -49,18 +50,19 @@
 								 </div>
 								  <div class="form-group col-md-3">
 									    <label for="building">Immeuble</label>
-									    <input  th:if="${type!=null}" type="text" class="form-control" id="numApart" name="building" th:value="${building}">
-									    <input  th:if="${type==null}" type="text" class="form-control" id="numApart"  name="building">
+									    <input  th:if="${immeuble!=null}" type="text" class="form-control" id="numApart" name="building" th:value="${immeuble}">
+									    <input  th:if="${immeuble==null}" type="text" class="form-control" id="numApart"  name="building" th:value="${building}">
 								 </div>
 								 <div class="form-group col-md-3">
 									    <label for="numApart">Numéro d'appartement</label>
-									    <input  th:if="${type!=null}" type="number" class="form-control" id="numApart"  name="numApart" th:value="${number}">
-									    <input  th:if="${type==null}" type="number" class="form-control" id="numApart"  name="numApart">
+									    <input  th:if="${apart!=null}" type="number" class="form-control" id="numApart"  name="numApart" th:value="${apart}">
+									    <input  th:if="${apart==null}" type="number" class="form-control" id="numApart"  name="numApart" th:value="${number}">
+									   <!-- <input  th:if="${type==null}" type="number" class="form-control" id="numApart"  name="numApart"> --> 
 								 </div>
 								 <div class="form-group col-md-3">
 									    <label for="visit_id">Numéro de visite</label>
-									    <input type="number" th:if="${type!=null}" class="form-control" id="visit_id" name="visit_id" th:value="${visit_id}">
-									    <input type="number" th:if="${type==null}" class="form-control" id="visit_id" name="visit_id">
+									    <input type="number" th:if="${visite!=null}" class="form-control" id="visit_id" name="visit_id" th:value="${visite}">
+									    <input type="number" th:if="${visite==null}" class="form-control" id="visit_id" name="visit_id" th:value="${visit_id}">
 								 </div>
 								<div class="form-group col-md-3">
 									    <label for="advanced">Montant avancée</label>
@@ -115,9 +117,9 @@
 						                  		<td th:text="${ag.finalPrice}"></td>
 						                  		<td th:text="${ag.state}"></td>
 						                  		<td th:if="${ag.state.name()!='ANNULE'}" >
-						                  		 <a th:href="@{/promesse/{id}(id=${ag.idAgreement})}"><i class="fa fa-edit text-primary"></i></a>
+						                  		 <a th:href="@{/Promesse/promesse/{id}(id=${ag.idAgreement})}"><i class="fa fa-edit text-primary"></i></a>
 		                   						 &nbsp;&nbsp;&nbsp;
-		                    					<a th:href="@{/liste-promesses/{id}(id=${ag.idAgreement})}"><i class="fa fa-trash text-danger"></i></a>
+		                    					<a th:href="@{/Promesse/liste-promesses/{id}(id=${ag.idAgreement})}"><i class="fa fa-trash text-danger"></i></a>
 						                  		</td>
 						                  		<td th:if="${ag.state.name()=='ANNULE'}" ></td>
                                             </tr>

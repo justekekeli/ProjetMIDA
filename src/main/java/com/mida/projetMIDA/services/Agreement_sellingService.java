@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mida.projetMIDA.AgreementState;
 import com.mida.projetMIDA.models.Agreement_selling;
 import com.mida.projetMIDA.repositories.Agreement_sellingRepository;
 
@@ -14,6 +15,15 @@ public class Agreement_sellingService {
 	@Autowired
 	private Agreement_sellingRepository repo;
 	
+		public int lenghtList() {
+			int i=0;
+			for(Agreement_selling ag:this.getAgreement()) {
+				if(ag.getState()==AgreementState.CONCLU) {
+					i++;
+				}
+			}
+			return i;
+		}
 	  public List<Agreement_selling> getAgreement() {
 	        return repo.findAll();
 	    }
