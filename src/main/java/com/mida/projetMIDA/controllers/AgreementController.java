@@ -49,6 +49,7 @@ public class AgreementController {
 		model.addAttribute("type",null);
 		model.addAttribute("lawyers", lservice.getLawyers());
         model.put("agreements",service.getAgreement());
+        model.addAttribute("info",info);
         return "promesses";
     }
 

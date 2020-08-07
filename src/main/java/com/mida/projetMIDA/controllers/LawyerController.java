@@ -43,7 +43,7 @@ public class LawyerController {
 	    public String deleteLawyer(@PathVariable(value="id") Long id,RedirectAttributes attr) {
 	        service.deleteLawyer(id);
 	        attr.addAttribute("info", "supprimer");
-	        return "redirect:/liste-avocats";
+	        return "redirect:/Avocat/liste-avocats";
 	    }
 
 	    @GetMapping("/avocat/{id}")
@@ -61,7 +61,7 @@ public class LawyerController {
 	        }
 	        service.updateLawyer(lawyer_id,u);
 	        attr.addAttribute("info", "editer");
-	        return "redirect:/liste-avocats";
+	        return "redirect:/Avocat/liste-avocats";
 	    }
 	    @PostMapping(value = "/avocat-ajout")
 	    public String addLawyer(@Valid Lawyer u, BindingResult result,RedirectAttributes attr) {
@@ -71,6 +71,6 @@ public class LawyerController {
 	        }
 	        service.saveLawyer(u);
 	        attr.addAttribute("info", "creer");
-	        return "redirect:/liste-avocats";
+	        return "redirect:/Avocat/liste-avocats";
 	    }
 }

@@ -42,7 +42,7 @@ public class BuildingController {
 	    public String deleteBuilding(@PathVariable(value="id") Long id,RedirectAttributes attr) {
 	        service.deleteBuilding(id);
 	        attr.addAttribute("info", "supprimer");
-	        return "redirect:/liste-immeubles";
+	        return "redirect:/Immeuble/liste-immeubles";
 	    }
 
 	    @GetMapping("/immeuble/{id}")
@@ -60,7 +60,7 @@ public class BuildingController {
 	        }
 	        service.updateBuilding(build_id, u);
 	        attr.addAttribute("info", "editer");
-	        return "redirect:/liste-immeubles";
+	        return "redirect:/Immeuble/liste-immeubles";
 	    }
 	    @PostMapping(value = "/immeuble-ajout")
 	    public String addBuilding( @Valid Building u, BindingResult result,RedirectAttributes attr) {
@@ -70,6 +70,6 @@ public class BuildingController {
 	        }
 	        service.addBuilding(u);
 	        attr.addAttribute("info", "creer");
-	        return "redirect:/liste-immeubles";
+	        return "redirect:/Immeuble/liste-immeubles";
 	    }
 }

@@ -45,7 +45,7 @@ public class ApartmentController {
 	    public String deleteApart(@PathVariable(value="id") Long id,RedirectAttributes attr) {
 	        service.deleteApartment(id);
 	        attr.addAttribute("info", "supprimer");
-	        return "redirect:/liste-appartements";
+	        return "redirect:/Appartement/liste-appartements";
 	    }
 
 	    @GetMapping("/appartement/{id}")
@@ -84,7 +84,7 @@ public class ApartmentController {
 	        u.setNumber(Utils.formInt(step, num));
 	        service.updateApart(apart_id, u);
 	        attr.addAttribute("info", "editer");
-	        return "redirect:/liste-appartements";
+	        return "redirect:/Appartement/liste-appartements";
 	    }
 	    @PostMapping("/appartement-ajout")
 	    public String addApart(@Valid Apartment u,@RequestParam String name,@RequestParam int step,@RequestParam int num, BindingResult result,RedirectAttributes attr) {
@@ -97,6 +97,6 @@ public class ApartmentController {
 	        u.setBuilding(building);
 	        service.addApart(u);
 	        attr.addAttribute("info", "creer");
-	        return "redirect:/liste-appartements";
+	        return "redirect:/Appartement/liste-appartements";
 	    }
 }
