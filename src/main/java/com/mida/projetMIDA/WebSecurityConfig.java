@@ -51,9 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/Visite/**").hasAnyAuthority("ADMIN","AGENT")
 			.anyRequest().authenticated()
 			.and()
-			.formLogin().loginPage("/login").permitAll()
-			.and()
-			.logout().permitAll()
+			.formLogin().loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/403");
 	}

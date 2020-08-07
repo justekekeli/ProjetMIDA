@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mida.projetMIDA.Utils;
 import com.mida.projetMIDA.models.Role;
@@ -30,8 +31,9 @@ public class UserController {
 	private RoleService serviceRs;
 	
 	@GetMapping("/liste-utilisateurs")
-    public String showUsers(ModelMap model) {
+    public String showUsers(@RequestParam(name="info",defaultValue = "") String info,ModelMap model) {
         model.addAttribute("users", service.getUsers());
+        model.addAttribute("info",info);
         return "utilisateurs";
     }
 	@GetMapping(value = "/utilisateur-ajout")
@@ -42,8 +44,9 @@ public class UserController {
     }
 
 	    @GetMapping(value = "/liste-utilisateurs/{id}")
-	    public String deleteUser(@PathVariable(value="id") Long id) {
+	    public String deleteUser(@PathVariable(value="id") Long id,RedirectAttributes attr) {
 	        service.deleteUser(id);
+	        attr.addAttribute("info", "supprimer");
 	        return "redirect:/Utilisateurs/liste-utilisateurs";
 	    }
 
@@ -55,16 +58,17 @@ public class UserController {
 	        return "utilisateur";
 	    }
 	    @RequestMapping(value = "/utilisateur/{id}")
-	    public String updateVisit(ModelMap model,@PathVariable(value="id") Long user_id, @Valid User u, BindingResult result) {
+	    public String updateVisit(RedirectAttributes attr,@PathVariable(value="id") Long user_id, @Valid User u, BindingResult result) {
 
 	        if (result.hasErrors()) {
 	            return "utilisateur";
 	        }
 	        service.updateUser(user_id,u);
+	        attr.addAttribute("info", "editer");
 	        return "redirect:/Utilisateurs/liste-utilisateurs";
 	    }
 	    @PostMapping(value = "/utilisateur-ajout")
-	    public String addUser(ModelMap model, @Valid User u,@RequestParam String statut, BindingResult result) {
+	    public String addUser(RedirectAttributes attr, @Valid User u,@RequestParam String statut, BindingResult result) {
 
 	        if (result.hasErrors()) {
 	            return "utilisateur";
@@ -73,6 +77,7 @@ public class UserController {
 	        Role r= serviceRs.find(statut);
 	        u.getRoles().add(r);
 	        service.addUser(u);
+	        attr.addAttribute("info", "creer");
 	        return "redirect:/Utilisateurs/liste-utilisateurs";
 	    }
 	/*    @GetMapping(value = "/utilisateurs/{num}")

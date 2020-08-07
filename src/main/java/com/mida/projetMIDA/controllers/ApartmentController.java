@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mida.projetMIDA.Utils;
 import com.mida.projetMIDA.models.Apartment;
@@ -30,18 +31,20 @@ public class ApartmentController {
 	private BuildingService bservice;
 	
 	@GetMapping("/liste-appartements")
-	public String showApartments(ModelMap model) {
+	public String showApartments(@RequestParam(name="info",defaultValue = "") String info,ModelMap model) {
 		List<Apartment> apartments = service.getApartments();
 	    model.put("apartments",apartments);
 	    //ajout
 	    model.addAttribute("apartment", new Apartment());
 	    model.addAttribute("type",null);
 	    model.addAttribute("buildings", bservice.getBuildings());
+	    model.addAttribute("info", info);
 	    return "appartements";
 	}
 	    @GetMapping( "/liste-appartements/{id}")
-	    public String deleteApart(@PathVariable(value="id") Long id) {
+	    public String deleteApart(@PathVariable(value="id") Long id,RedirectAttributes attr) {
 	        service.deleteApartment(id);
+	        attr.addAttribute("info", "supprimer");
 	        return "redirect:/liste-appartements";
 	    }
 
@@ -72,7 +75,7 @@ public class ApartmentController {
 	        return "appartements";
 	    }
 	    @RequestMapping(value = "/appartement/{id}")
-	    public String updateApart(ModelMap model,@PathVariable(value="id") Long apart_id, @Valid Apartment u,@RequestParam int step,@RequestParam int num, BindingResult result) {
+	    public String updateApart(@PathVariable(value="id") Long apart_id, @Valid Apartment u,@RequestParam int step,@RequestParam int num, BindingResult result,RedirectAttributes attr) {
 
 	        if (result.hasErrors()) {
 	            return "appartements";
@@ -80,10 +83,11 @@ public class ApartmentController {
 	        u.setUpdatedDate(Utils.setDate());
 	        u.setNumber(Utils.formInt(step, num));
 	        service.updateApart(apart_id, u);
+	        attr.addAttribute("info", "editer");
 	        return "redirect:/liste-appartements";
 	    }
 	    @PostMapping("/appartement-ajout")
-	    public String addApart(ModelMap model, @Valid Apartment u,@RequestParam String name,@RequestParam int step,@RequestParam int num, BindingResult result) {
+	    public String addApart(@Valid Apartment u,@RequestParam String name,@RequestParam int step,@RequestParam int num, BindingResult result,RedirectAttributes attr) {
 
 	        if (result.hasErrors()) {
 	            return "appartement";
@@ -92,6 +96,7 @@ public class ApartmentController {
 	        Building building=bservice.getBuildingByName(name);
 	        u.setBuilding(building);
 	        service.addApart(u);
+	        attr.addAttribute("info", "creer");
 	        return "redirect:/liste-appartements";
 	    }
 }

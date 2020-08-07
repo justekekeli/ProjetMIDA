@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mida.projetMIDA.Utils;
 import com.mida.projetMIDA.models.Apartment;
@@ -40,19 +41,21 @@ public class VisitController {
 	private UserService uservice;
 
 	@GetMapping(value = {"/liste-visites", "/liste-visites/{cinClient}"})
-    public String showVisits(@PathVariable(name="cinClient", required = false) String cin,ModelMap model) {
+    public String showVisits(@PathVariable(name="cinClient", required = false) String cin,@RequestParam(name="info",defaultValue = "") String info,ModelMap model) {
 		List<Visit> visits = service.getVisits();
 		model.addAttribute("visit", new Visit());
 		model.addAttribute("type",null);
 		model.addAttribute("buildings", bservice.getBuildings());
 		model.addAttribute("users", uservice.getUsers());
         model.put("visits",visits);
+        model.addAttribute("info",info);
         return "visites";
     }
 
     @GetMapping(value = "/liste-visite/{id}")
-    public String deleteVisit(@PathVariable(value="id") Long id) {
+    public String deleteVisit(@PathVariable(value="id") Long id,RedirectAttributes attr) {
         service.deleteVisit(id);
+        attr.addAttribute("info", "supprimer");
         return "redirect:/Visite/liste-visites";
     }
 
@@ -69,7 +72,7 @@ public class VisitController {
         return "visites";
     }
     @RequestMapping(value = "/visite/{id}")
-    public String updateVisit(ModelMap model,@PathVariable(value="id") Long visit_id, @RequestParam String cin,@RequestParam String mail, @RequestParam int numApart,@RequestParam String name,@Valid Visit visit, BindingResult result) {
+    public String updateVisit(@PathVariable(value="id") Long visit_id, @RequestParam String cin,@RequestParam String mail, @RequestParam int numApart,@RequestParam String name,@Valid Visit visit, BindingResult result,RedirectAttributes attr) {
 
         if (result.hasErrors()) {
             return "visites";
@@ -84,10 +87,11 @@ public class VisitController {
         visit.setUserVisit(uservice.getUsersByEmail(mail));
         visit.setApart(apart);
         service.updateVisit(visit_id,visit);
+        attr.addAttribute("info", "editer");
         return "redirect:/Visite/liste-visites";
     }
     @PostMapping(value = "/visite-ajout")
-    public String addVisit(ModelMap model, @Valid Visit visit, @RequestParam String cin,@RequestParam String mail,  @RequestParam int numApart,@RequestParam String name,BindingResult result) {
+    public String addVisit(@Valid Visit visit, @RequestParam String cin,@RequestParam String mail,  @RequestParam int numApart,@RequestParam String name,BindingResult result,RedirectAttributes attr) {
 
         if (result.hasErrors()) {
             return "visites";
@@ -104,6 +108,7 @@ public class VisitController {
         visit.setCustomer(cservice.getCustomersByCin(cin));
         visit.setApart(apart);
         service.saveVisit(visit);
+        attr.addAttribute("info", "creer");
         return "redirect:/Visite/liste-visites";
     }
 }

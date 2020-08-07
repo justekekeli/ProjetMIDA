@@ -36,6 +36,7 @@ public class User {
 			inverseJoinColumns= @JoinColumn(name="role_id")
 			)
 	  private List<Role> roles =new ArrayList<>();
+	
 	//Un utilisateur peut gérer 1 ou plusieurs clients
 	@OneToMany(mappedBy = "userCustomer", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)

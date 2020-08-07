@@ -1,7 +1,12 @@
 package com.mida.projetMIDA.controllers;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +42,18 @@ public class IndexController {
 		return "403";
 	}
 	
-	@GetMapping("/login")
+	@GetMapping(value = {"/login", "/login?logout"})
 	public String login() {
 		return "login";
 	}
+	
+    @GetMapping("/logout")
+    public String fetchSignoutSite(HttpServletRequest request, HttpServletResponse response) {        
+        org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+          
+        return "redirect:/login?logout";
+    }
 }

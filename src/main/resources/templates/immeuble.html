@@ -24,13 +24,13 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">Immeubles</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a th:href="@{/}">liste</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/Immeuble/liste-immeubles}">liste</a></li>
                             <li class="breadcrumb-item active" th:if="${type!=null}">Modification</li>
                             <li class="breadcrumb-item active" th:if="${type==null}">Ajout</li>
                         </ol>
                         <div class="row justify-content-center">
                             <div class="col-md-10">
-                              <form class="row justify-content-around" th:action="${type != null}? @{/immeuble/{id}(id=${building.idBuilding})} :@{/immeuble-ajout}" th:object="${building}" method="post">
+                              <form class="row justify-content-around" th:action="${type != null}? @{/Immeuble/immeuble/{id}(id=${building.idBuilding})} :@{/Immeuble/immeuble-ajout}" th:object="${building}" method="post">
 								 <div class="col-md-5">
 								  <div class="form-group">
 								    <label for="address">Adresse de l'immeuble</label>

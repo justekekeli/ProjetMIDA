@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mida.projetMIDA.AgreementState;
 import com.mida.projetMIDA.Utils;
@@ -41,7 +42,7 @@ public class AgreementController {
     public String showAgreements(@PathVariable(name="cin", required = false) String cin,
     		@PathVariable(name="visite", required = false) String visite,
     		@PathVariable(name="immeuble", required = false) String immeuble,
-    		@PathVariable(name="apart", required = false) String apart,
+    		@PathVariable(name="apart", required = false) String apart,@RequestParam(name="info",defaultValue = "") String info,
     		ModelMap model
     		) {
 		model.addAttribute("agreement", new Agreement_selling());
@@ -52,8 +53,9 @@ public class AgreementController {
     }
 
     @GetMapping(value = "/liste-promesses/{id}")
-    public String deleteAgreement(@PathVariable(value="id") Long id) {
+    public String deleteAgreement(@PathVariable(value="id") Long id,RedirectAttributes attr) {
         service.deleteAgreement(id);
+        attr.addAttribute("info", "supprimer");
         return "redirect:/Promesse/liste-promesses";
     }
 
@@ -71,7 +73,7 @@ public class AgreementController {
         return "promesses";
     }
     @RequestMapping(value = "/promesse/{id}")
-    public String updateAgreement(ModelMap model,@PathVariable(value="id") Long id, @RequestParam Long lawyer, @RequestParam String reason, @RequestParam Long visit_id,@Valid Agreement_selling ag, BindingResult result) {
+    public String updateAgreement(@PathVariable(value="id") Long id, @RequestParam Long lawyer, @RequestParam String reason, @RequestParam Long visit_id,@Valid Agreement_selling ag, BindingResult result,RedirectAttributes attr) {
 
         if (result.hasErrors()) {
             return "promesses";
@@ -91,10 +93,11 @@ public class AgreementController {
             visit.getApart().setStateApart(true);
         }
         service.updateAgreement(id, ag);
+        attr.addAttribute("info", "editer");
         return "redirect:/Promesse/liste-promesses";
     }
     @PostMapping(value = "/promesse-ajout")
-    public String addAgreement(ModelMap model, @Valid Agreement_selling ag, @RequestParam Long lawyer, @RequestParam Long visit_id, BindingResult result) {
+    public String addAgreement( @Valid Agreement_selling ag, @RequestParam Long lawyer, @RequestParam Long visit_id, BindingResult result,RedirectAttributes attr) {
 
         if (result.hasErrors()) {
             return "promesses";
@@ -103,6 +106,7 @@ public class AgreementController {
         ag.setLawyer(lservice.getLawyerById(lawyer).get());
         ag.setVisit(vservice.getVisitById(visit_id).get());
         service.addAgreement(ag);
+        attr.addAttribute("info", "creer");
         return "redirect:/Promesse/liste-promesses";
     }
 }

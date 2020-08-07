@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mida.projetMIDA.models.Building;
 import com.mida.projetMIDA.services.BuildingService;
@@ -23,9 +25,10 @@ public class BuildingController {
 	private BuildingService service;
 	
 	@GetMapping("/liste-immeubles")
-    public String showBuildings(ModelMap model) {
+    public String showBuildings(@RequestParam(name="info",defaultValue = "") String info,ModelMap model) {
 		List<Building> buildings = service.getBuildings();
         model.put("buildings",buildings);
+        model.put("info",info);
         return "immeubles";
     }
 	 @GetMapping("/immeuble-ajout")
@@ -36,8 +39,9 @@ public class BuildingController {
 	    }
 
 	    @GetMapping( "/liste-immeubles/{id}")
-	    public String deleteBuilding(@PathVariable(value="id") Long id) {
+	    public String deleteBuilding(@PathVariable(value="id") Long id,RedirectAttributes attr) {
 	        service.deleteBuilding(id);
+	        attr.addAttribute("info", "supprimer");
 	        return "redirect:/liste-immeubles";
 	    }
 
@@ -49,21 +53,23 @@ public class BuildingController {
 	        return "immeuble";
 	    }
 	    @RequestMapping(value = "/immeuble/{id}")
-	    public String updateBuilding(ModelMap model,@PathVariable(value="id") Long build_id, @Valid Building u, BindingResult result) {
+	    public String updateBuilding(@PathVariable(value="id") Long build_id, @Valid Building u, BindingResult result,RedirectAttributes attr) {
 
 	        if (result.hasErrors()) {
 	            return "immeuble";
 	        }
 	        service.updateBuilding(build_id, u);
+	        attr.addAttribute("info", "editer");
 	        return "redirect:/liste-immeubles";
 	    }
 	    @PostMapping(value = "/immeuble-ajout")
-	    public String addBuilding(ModelMap model, @Valid Building u, BindingResult result) {
+	    public String addBuilding( @Valid Building u, BindingResult result,RedirectAttributes attr) {
 
 	        if (result.hasErrors()) {
 	            return "immeuble";
 	        }
 	        service.addBuilding(u);
+	        attr.addAttribute("info", "creer");
 	        return "redirect:/liste-immeubles";
 	    }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mida.projetMIDA.Utils;
 import com.mida.projetMIDA.models.Customer;
@@ -32,9 +33,10 @@ public class CustomerController {
 	private UserService uservice;
 	
 	@GetMapping("/clients")
-    public String showCustomers(ModelMap model) {
+    public String showCustomers(@RequestParam(name="info",defaultValue = "") String info,ModelMap model) {
 		List<Customer> customers = service.getCustomers();
         model.put("customers",customers);
+        model.addAttribute("info",info);
         return "clients";
     }
 	 @GetMapping("/client-ajout")
@@ -46,8 +48,9 @@ public class CustomerController {
 	    }
 
 	    @GetMapping( "/liste-clients/{id}")
-	    public String deleteCustomer(@PathVariable(value="id") Long id) {
+	    public String deleteCustomer(@PathVariable(value="id") Long id,RedirectAttributes attr) {
 	        service.deleteCustomer(id);
+	        attr.addAttribute("info", "supprimer");
 	        return "redirect:/Clients/clients";
 	    }
 
@@ -60,15 +63,16 @@ public class CustomerController {
 	        return "client";
 	    }
 	    @PostMapping(value = "/client/{id}")
-	    public String updateCustomer( @Valid Customer u, BindingResult result,ModelMap model,@PathVariable(value="id") Long customer_id) {
+	    public String updateCustomer( @Valid Customer u, BindingResult result,RedirectAttributes attr,@PathVariable(value="id") Long customer_id) {
 	        if (result.hasErrors()) {
 	            return "client";
 	        }
 	        service.updateCustomer(customer_id, u);
+	        attr.addAttribute("info", "editer");
 	        return "redirect:/Clients/clients";
 	    }
 	    @PostMapping(value = "/client-ajout")
-	    public String addCustomer(@RequestParam String mail,@Valid Customer u, BindingResult result,ModelMap model) {
+	    public String addCustomer(@RequestParam String mail,@Valid Customer u, BindingResult result,RedirectAttributes attr) {
 
 	        if (result.hasErrors()) {
 	            return "client";
@@ -77,6 +81,7 @@ public class CustomerController {
 	        User user= uservice.getUsersByEmail(mail);
 	        u.setUserCustomer(user);
 	        service.addCustomer(u);
+	        attr.addAttribute("info", "creer");
 	        return "redirect:/Clients/clients";
 	    }
 }
