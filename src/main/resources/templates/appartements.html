@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,17 +14,21 @@
 		<script src="https://use.fontawesome.com/ee84922179.js"></script>
     </head>
     <body>
-     	<div th:replace="common/layout :: mynav"></div>
+     	<div sec:authorize="hasAuthority('ADMIN')" th:replace="common/layout :: mynav"></div>
+        <div sec:authorize="hasAuthority('AGENT')" th:replace="common/layout2 :: mynav"></div>
+        <div sec:authorize="hasAuthority('SECRETAIRE')" th:replace="common/layout3 :: mynav"></div>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                   <div th:replace="common/layout :: mysidebar"></div>
+                    <div sec:authorize="hasAuthority('ADMIN')" th:replace="common/layout :: mysidebar"></div>
+                    <div sec:authorize="hasAuthority('AGENT')" th:replace="common/layout2 :: mysidebar"></div>
+                    <div sec:authorize="hasAuthority('SECRETAIRE')" th:replace="common/layout3 :: mysidebar"></div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Appartements</h1>&nbsp;<a href="#apartForm" class="btn btn-success btn-sm mb-3 text-light">Ajouter appartement</a>
+                        <h1 class="mt-4">Appartements</h1>&nbsp;<a href="#apartForm" sec:authorize="hasAnyAuthority('ADMIN','SECRETAIRE')" class="btn btn-success btn-sm mb-3 text-light">Ajouter appartement</a>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a th:href="@{/Appartement/liste-appartements}">liste</a></li>
                             <li class="breadcrumb-item active">recherche</li>
@@ -88,7 +93,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12" sec:authorize="hasAnyAuthority('ADMIN','SECRETAIRE')">
                          <form class="row justify-content-around" th:action="${type != null}? @{/Appartement/appartement/{id}(id=${apartment.idApartment})} :@{/Appartement/appartement-ajout}" th:object="${apartment}" method="post">
                          	<div class="col-md-11 row" id="apartForm">
 	                         	 <div class="form-group col-md-3">

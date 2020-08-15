@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 		<meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,11 +14,15 @@
 		<script src="https://use.fontawesome.com/ee84922179.js"></script>
 </head>
 <body>
- 	<div th:replace="common/layout :: mynav"></div>
+ 	<div sec:authorize="hasAuthority('ADMIN')" th:replace="common/layout :: mynav"></div>
+        <div sec:authorize="hasAuthority('AGENT')" th:replace="common/layout2 :: mynav"></div>
+        <div sec:authorize="hasAuthority('SECRETAIRE')" th:replace="common/layout3 :: mynav"></div>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                   <div th:replace="common/layout :: mysidebar"></div>
+                    <div sec:authorize="hasAuthority('ADMIN')" th:replace="common/layout :: mysidebar"></div>
+                    <div sec:authorize="hasAuthority('AGENT')" th:replace="common/layout2 :: mysidebar"></div>
+                    <div sec:authorize="hasAuthority('SECRETAIRE')" th:replace="common/layout3 :: mysidebar"></div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">

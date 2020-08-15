@@ -35,7 +35,7 @@ public class ApartementService {
 	    	repo.save(e);
 	    }
 
-	    public void addApart(Apartment a) {
+	   public void addApart(Apartment a) {
 	        repo.save(a);
 	    }
 	    public void deleteApartment(Long id) {
@@ -44,7 +44,7 @@ public class ApartementService {
 	            repo.delete(a.get());
 	        }
 	    }
-	    public void saveApartment(Apartment a) {
+	/*    public void saveApartment(Apartment a) {
 	        repo.save(a);
-	    }
+	    }*/
 }
