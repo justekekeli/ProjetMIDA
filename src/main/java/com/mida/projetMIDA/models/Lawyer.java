@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="lawyers")
+@Table(name="_lawyers")
 public class Lawyer {
 
 	//informations sur un avocat travaillant avec la société
