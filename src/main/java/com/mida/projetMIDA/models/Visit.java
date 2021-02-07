@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="visits")
+@Table(name="_visits")
 public class Visit {
 
 	//informations d'enregistrement d'une visite
