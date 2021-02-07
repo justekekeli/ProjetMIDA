@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mida.projetMIDA.AgreementState;
 
 @Entity
-@Table(name="agreement_sellings")
+@Table(name="_agreement_sellings")
 public class Agreement_selling{
 
 	//informations sur une promesse de vente d'appartement établi avec un client
