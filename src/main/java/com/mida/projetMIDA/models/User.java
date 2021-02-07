@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users")
+@Table(name="_users")
 public class User {
 	//informations sur un utilisateur de l'application
 	@Id
