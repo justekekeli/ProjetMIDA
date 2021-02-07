@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="cancellations")
+@Table(name="_cancellations")
 public class Cancellation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
