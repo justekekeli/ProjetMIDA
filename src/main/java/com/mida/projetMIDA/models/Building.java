@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="buildings")
+@Table(name="_buildings")
 public class Building {
 
 	//informations relatives à un immeuble de la société
