@@ -20,7 +20,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="customers")
+@Table(name="_customers")
 public class Customer {
 
 	//informations relatives à un client qui est intéréssé
