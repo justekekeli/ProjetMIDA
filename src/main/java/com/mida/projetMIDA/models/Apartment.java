@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="apartments")
+@Table(name="_apartments")
 public class Apartment  {
 
 	//informations relatives à un appartement
